@@ -29,7 +29,7 @@ public class Annonce {
     @ManyToOne @JoinColumn(name = "id_moteur") Moteur moteur;
     
     String description;
-    String prix;
+    double prix;
     LocalDate annee;
     int places;
     int portes;
@@ -96,9 +96,9 @@ public class Annonce {
 
     public void setMoteur(Moteur moteur) { this.moteur = moteur; }
 
-    public String getPrix() { return prix; }
+    public double getPrix() { return prix; }
 
-    public void setPrix(String prix) { this.prix = prix; }
+    public void setPrix(double prix) { this.prix = prix; }
 
     public LocalDate getAnnee() { return annee; }
 
@@ -119,10 +119,10 @@ public class Annonce {
     public void setConsommation(double consommation) { this.consommation = consommation; }
     public void setConsommation(String consommation) { this.consommation = Double.parseDouble(consommation); }
 
-    public int getPlace() { return places; }
+    public int getPlaces() { return places; }
 
-    public void setPlace(int places) { this.places = places; }    
-    public void setPlace(String places) { this.places = Integer.parseInt(places); }
+    public void setPlaces(int places) { this.places = places; }    
+    public void setPlaces(String places) { this.places = Integer.parseInt(places); }
 
     public String getImage() {  return image; }
 

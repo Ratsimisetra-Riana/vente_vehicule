@@ -20,24 +20,7 @@ public class AnnonceService {
     @Autowired
     AnnonceRepository repository;
     // user
-    public Annonce createAnnonce(String idUtilisateur, String image, String description, String prix, String places, String portes, String vmax, String consommation, String annee,  String idCorps, String idMarque, String idModele, String idMoteur, String transmission) {
-        Annonce annonce = new Annonce();
-        annonce.setDescription(description);
-        annonce.setDateAnnonce(LocalDateTime.now());
-        annonce.setAnnee(annee);
-        annonce.setStatus("0");
-        annonce.setPrix(prix);
-        annonce.setPlace(places);
-        annonce.setPortes(portes);
-        annonce.setVmax(vmax);
-        annonce.setImage(image);
-        annonce.setConsommation(consommation);
-        annonce.setIdUtilisateur(idUtilisateur);
-        annonce.setCorps(new Corps(idCorps));
-        annonce.setMarque(new Marque(idMarque));
-        annonce.setModele(new Modele(idModele));
-        annonce.setMoteur(new Moteur(idMoteur));
-        annonce.setTransmission(new Transmission(transmission));
+    public Annonce createAnnonce(Annonce annonce) {
         return repository.save(annonce);
     }
 
@@ -57,16 +40,22 @@ public class AnnonceService {
         return repository.findByUtilisateur(idUtilisateur);
     }
 
-    public void addFavoris(String idAnnonce, String idUtilisateur) {
+    public Optional<Annonce> getByIdAnnonce(String idAnnonce) {
+        return repository.findById(idAnnonce);
+    }
+
+    public Optional<Annonce> addFavoris(String idAnnonce, String idUtilisateur) {
         repository.saveFavoris(idAnnonce, idUtilisateur);
+        return repository.findById(idAnnonce);
     }
 
     public List<Annonce> getFavoris(String idUtilisateur) {
         return repository.findFavoris(idUtilisateur);
     }
     // admin
-    public void insertValidation(int etat, String idAnnonce) {
+    public Optional<Annonce> insertValidation(int etat, String idAnnonce) {
         repository.saveValidation(etat, idAnnonce);
+        return repository.findById(idAnnonce);
     }
 
     public List<Annonce> getAllDemande() {
@@ -78,9 +67,8 @@ public class AnnonceService {
         return repository.findAllValidate();
     }
 
-    public List<Annonce> searchByElements(String mots, String idCoprs, String idMarque, String idModele, String idMoteur,String idTransmission) {
-        
-        return repository.findByElements(mots, idCoprs, idMarque, idModele, idMoteur, idTransmission);
+    public List<Annonce> searchByElements(String description, String idCoprs, String idMarque, String idModele, String idMoteur,String idTransmission) {
+        return repository.findByElements(description, idCoprs, idTransmission, idMoteur, idMarque, idModele);
     }
 
     public Optional<Annonce> findById(String id) {

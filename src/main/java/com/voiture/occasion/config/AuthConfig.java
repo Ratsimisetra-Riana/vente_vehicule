@@ -19,7 +19,7 @@ import com.voiture.occasion.config.auth.SecurityFilter;
 @EnableWebSecurity
 public class AuthConfig {
     @Autowired
-    SecurityFilter securityFilter;
+    private SecurityFilter securityFilter;
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {

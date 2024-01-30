@@ -19,6 +19,6 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, String
         @Param("motdepasse") String password
    );
 
-   public UserDetails  findByIdUtilisateur(String idUtilisateur);
+   public UserDetails findByIdUtilisateur(String idUtilisateur);
 }   
 
