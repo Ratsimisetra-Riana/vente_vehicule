@@ -4,12 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.voiture.occasion.model.Annonce;
 import com.voiture.occasion.model.Corps;
 import com.voiture.occasion.model.Moteur;
+import com.voiture.occasion.model.Statistique;
 import com.voiture.occasion.model.Transmission;
 import com.voiture.occasion.model.Marque;
 import com.voiture.occasion.model.Modele;
@@ -19,11 +19,11 @@ import com.voiture.occasion.repository.TransmissionRepository;
 import com.voiture.occasion.repository.MarqueRepository;
 import com.voiture.occasion.repository.ModeleRepository;
 import com.voiture.occasion.service.AnnonceService;
+import com.voiture.occasion.service.StatistiqueService;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,6 +44,8 @@ public class AdminController {
     private MoteurRepository moteurRep;
     @Autowired
     private TransmissionRepository transmissionRep;
+    @Autowired
+    private StatistiqueService statistiqueRep;
     
     // corps
     @PostMapping("/admin/corp")
@@ -89,10 +91,8 @@ public class AdminController {
 
     // modele
     @PostMapping("/admin/modele")
-    public ResponseEntity<String> createModele(@RequestParam(name = "nomModele") String nom, @RequestParam(name = "marque") String idMarque, @RequestParam(name = "corps") String idCorps ) {
-        try { modeleRep.saveModele(nom, idMarque, idCorps); } 
-        catch (Exception e) { return ResponseEntity.ok("Error modele"); }        
-        return ResponseEntity.ok("Add modele successfully");
+    public Modele createModele(@RequestBody Modele modele) {
+        return  modeleRep.save(modele);
     }
 
     @GetMapping("/admin/modeles")
@@ -154,17 +154,21 @@ public class AdminController {
 
     // annonce 
     @PostMapping("/admin/annonce/{idannonce}/{etat}")
-    public ResponseEntity<String> insertValidation(@PathVariable(name = "idannonce") String id, @PathVariable(name = "etat") int etat) {
-        try { annonceRep.insertValidation(etat, id); } 
-        catch (Exception e) { return ResponseEntity.ok("Error validation"); }        
-        return ResponseEntity.ok("Add favoris successfully");
+    public Optional<Annonce> insertValidation(@PathVariable(name = "idannonce") String id, @PathVariable(name = "etat") int etat) {
+        return annonceRep.insertValidation(etat, id);
     }
 
-    @GetMapping("/admin")
-    public @ResponseBody List<Annonce> getAllDemande() { 
-        System.out.println("hello");  
+    @GetMapping("/admin/annonces")
+    public List<Annonce> getAllDemande() {
         return annonceRep.getAllDemande();
     }
+
+    // stat
+    @GetMapping("/admin/stats")
+    public Statistique getStatistique() {
+        return statistiqueRep.getStatistique();
+    }
+    
     
     
 }

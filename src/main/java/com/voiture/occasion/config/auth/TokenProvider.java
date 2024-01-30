@@ -16,8 +16,8 @@ import com.voiture.occasion.model.Utilisateur;
 @Service
 public class TokenProvider {
 
- 
-  private String JWT_SECRET="qwertyipjpdjtqpngfjshjhgcdkgukukdudkukdtukdudulylduld";
+  @Value("${security.jwt.token.secret-key}")
+  private String JWT_SECRET;
 
   public String generateAccessToken(Utilisateur user) {
       try {

@@ -3,7 +3,6 @@ package com.voiture.occasion.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,14 +31,14 @@ public class PublicController {
 
     @GetMapping("/public/recherche")
     public List<Annonce> getRecherche(
-        @RequestParam(name = "mots") String mots,
-        @RequestParam(name = "idCoprs") String idCoprs,
+        @RequestParam(name = "mots") String description,
+        @RequestParam(name = "idCorps") String idCoprs,
         @RequestParam(name = "idMarque") String idMarque,
         @RequestParam(name = "idModele") String idModele,
         @RequestParam(name = "idMoteur") String idMoteur,
         @RequestParam(name = "idTransmission") String idTransmission
     ) {
-        return service.searchByElements(mots, idCoprs, idMarque, idModele, idMoteur, idTransmission);
+        return service.searchByElements(description, idCoprs, idTransmission, idMoteur, idMarque, idModele);
     }
     
 
@@ -52,9 +51,7 @@ public class PublicController {
     public ResponseEntity<String> signIn(@RequestParam("email") String email, @RequestParam("password") String password) {
         try {
             String token = userRep.login(email, password);
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("Authorization", "Bearer "+token);
-            return ResponseEntity.ok().headers(headers).build();
+            return ResponseEntity.ok(token);
         } catch (Exception e) {
             return ResponseEntity.ok(e.getMessage());
         }

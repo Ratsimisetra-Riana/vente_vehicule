@@ -1,6 +1,9 @@
 package com.voiture.occasion.controller;
 
 import java.util.List;
+import java.util.Optional;
+import java.time.LocalDateTime;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +18,7 @@ import com.voiture.occasion.service.AnnonceService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 
 
@@ -26,24 +30,12 @@ public class UserController {
     private TokenProvider token;
 
     @PostMapping("/user/annonce")
-    public Annonce createAnnonce(
-        @RequestHeader(name = "Authorization") String utilisateur, 
-        @RequestParam(name = "description") String description, 
-        @RequestParam(name = "images") String images, 
-        @RequestParam(name = "prix") String prix, 
-        @RequestParam(name = "places") String places, 
-        @RequestParam(name = "portes") String portes, 
-        @RequestParam(name = "vmax") String vmax, 
-        @RequestParam(name = "consommation") String consommation, 
-        @RequestParam(name = "annee") String annee,  
-        @RequestParam(name = "corps") String idCorps, 
-        @RequestParam(name = "moteur") String idMoteur, 
-        @RequestParam(name = "marque") String idMarque, 
-        @RequestParam(name = "modele") String idModele, 
-        @RequestParam(name = "transmission") String transmission
-        ) {
+    public Annonce createAnnonce(@RequestHeader(name = "Authorization") String utilisateur, @RequestBody Annonce annonce) {
             String idUtilisateur = token.validateToken(utilisateur.replace("Bearer ", ""));
-            return service.createAnnonce(idUtilisateur, images, description, prix, places, portes, vmax, consommation, annee,  idCorps, idMarque, idModele, idMoteur, transmission);
+            annonce.setIdUtilisateur(idUtilisateur);
+            annonce.setStatus("0");
+            annonce.setDateAnnonce(LocalDateTime.now());
+            return service.createAnnonce(annonce);
     }
 
     @GetMapping("/user/annonces")
@@ -58,19 +50,23 @@ public class UserController {
         return service.getByUtilisateur(idUtilisateur);
     }
 
-    @PutMapping("/user/annonce/{id}")
-    public ResponseEntity<String> updateStatus(@PathVariable("id") String id, @RequestParam(name = "status") String status) {
+    @PutMapping("/user/annonce/{id}/{status}")
+    public ResponseEntity<String> updateStatus(@PathVariable("id") String id, @PathVariable(name = "status") String status) {
         try { service.updateStatus(id, status); } 
         catch (Exception e) { return ResponseEntity.ok("Error update"); }        
         return ResponseEntity.ok("Column update successfully");
     }
 
+    @GetMapping("/user/annonce/{id}")
+    public Optional<Annonce> getByIdAnnonce(@PathVariable("id") String id) {
+        return service.getByIdAnnonce(id);
+    }
+    
+
     @PostMapping("/user/favoris/{id}")
-    public ResponseEntity<String> addFavoris(@PathVariable("id") String id, @RequestHeader(name = "Authorization") String utilisateur)  {
+    public Optional<Annonce> addFavoris(@PathVariable("id") String id, @RequestHeader(name = "Authorization") String utilisateur)  {
         String idUtilisateur = token.validateToken(utilisateur.replace("Bearer ", ""));
-        try { service.addFavoris(id, idUtilisateur); } 
-        catch (Exception e) { return ResponseEntity.ok("Error add"); }        
-        return ResponseEntity.ok("Add favoris successfully");
+        return service.addFavoris(id, idUtilisateur); 
     }
     
     @GetMapping("/user/favoris")
