@@ -120,9 +120,10 @@ public class UserController {
  @GetMapping("/user/moteurs")
     public @ResponseBody List<Moteur> getAllMoteur() {
         return moteurRep.findAll();
+    } 
+
+    @GetMapping("/user/transmissions")
+    public @ResponseBody List<Transmission> getAllTransmission() {
+        return transmissionRep.findAll();
     }
-@PostMapping("/user/transmission")
-    public Transmission createTransmission(@RequestBody Transmission transmission) {
-        return transmissionRep.save(transmission);
-    }   
 }
