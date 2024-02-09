@@ -27,6 +27,16 @@ public class UserController {
     @Autowired
     private AnnonceService service;
     @Autowired
+    private ModeleRepository modeleRep;
+    @Autowired
+    private MarqueRepository marqueRep;
+    @Autowired
+    private CorpsRepository corpsRep;
+    @Autowired
+    private MoteurRepository moteurRep;
+    @Autowired
+    private TransmissionRepository transmissionRep;
+    @Autowired
     private TokenProvider token;
 
 
@@ -78,5 +88,27 @@ public class UserController {
         return service.getFavoris(idUtilisateur);
     }
 
-        
+    @GetMapping("/user/corps")
+    public @ResponseBody List<Corps> getAllCorps() {
+        return corpsRep.findAll();
+    }
+
+ @GetMapping("/user/marques")
+    public @ResponseBody List<Marque> getAllMarque() {
+        return marqueRep.findAll();
+    }
+
+@GetMapping("/user/modeles")
+    public @ResponseBody List<Modele> getAllModele() {
+        return modeleRep.findAll();
+    }
+
+ @GetMapping("/user/moteurs")
+    public @ResponseBody List<Moteur> getAllMoteur() {
+        return moteurRep.findAll();
+    }
+@PostMapping("/user/transmission")
+    public Transmission createTransmission(@RequestBody Transmission transmission) {
+        return transmissionRep.save(transmission);
+    }   
 }
