@@ -2,15 +2,18 @@ package com.voiture.occasion.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.voiture.occasion.helper.Utils;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Transient;
 
 @Entity
@@ -19,14 +22,10 @@ public class Annonce {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     String idAnnonce;
     String idUtilisateur;
-    String image;
     LocalDateTime dateAnnonce;
-    
-    @ManyToOne @JoinColumn(name = "id_corps")  Corps corps;
-    @ManyToOne @JoinColumn(name = "id_marque")  Marque marque;
-    @ManyToOne @JoinColumn(name = "id_modele")  Modele modele;
-    @ManyToOne @JoinColumn(name = "id_transmission") Transmission transmission;
-    @ManyToOne @JoinColumn(name = "id_moteur") Moteur moteur;
+
+    @OneToMany(mappedBy = "annonce", cascade = CascadeType.ALL)
+    List<Image> images;
     
     String description;
     double prix;
@@ -36,6 +35,13 @@ public class Annonce {
     double vmax;
     double consommation;
     int status;
+
+    @ManyToOne @JoinColumn(name = "id_corps")  Corps corps;
+    @ManyToOne @JoinColumn(name = "id_marque")  Marque marque;
+    @ManyToOne @JoinColumn(name = "id_modele")  Modele modele;
+    @ManyToOne @JoinColumn(name = "id_transmission") Transmission transmission;
+    @ManyToOne @JoinColumn(name = "id_moteur") Moteur moteur;
+    
     
     @Transient
     LocalDateTime dateValidation;
@@ -124,9 +130,9 @@ public class Annonce {
     public void setPlaces(int places) { this.places = places; }    
     public void setPlaces(String places) { this.places = Integer.parseInt(places); }
 
-    public String getImage() {  return image; }
+    public List<Image> getImages() { return images; }
 
-    public void setImage(String image) { this.image = image; }   
+    public void setImages(List<Image> images) { this.images = images; }
      
     
 }

@@ -1,31 +1,34 @@
 package com.voiture.occasion.service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.voiture.occasion.model.Annonce;
-import com.voiture.occasion.model.Corps;
-import com.voiture.occasion.model.Moteur;
-import com.voiture.occasion.model.Transmission;
-import com.voiture.occasion.model.Marque;
-import com.voiture.occasion.model.Modele;
+import com.voiture.occasion.model.Image;
 import com.voiture.occasion.repository.AnnonceRepository;
+import com.voiture.occasion.repository.ImageRepository;
 
 @Service
 public class AnnonceService {
     @Autowired
     AnnonceRepository repository;
-    // user
-    public Annonce createAnnonce(Annonce annonce) {
-        return repository.save(annonce);
-    }
 
+    @Autowired
+    ImageRepository imageRepo;
+
+    public Annonce createAnnonce(Annonce annonce)  {
+        Annonce annc = repository.save(annonce);
+        List<Image> images = annonce.getImages();
+        for (Image image : images) {
+            image.setAnnonce(annc);
+        }
+        imageRepo.saveAll(images);
+        return annc;
+    }    
     
-    public void updateStatus(String id, String status) throws Exception {
+    public Optional<Annonce> updateStatus(String id, String status) throws Exception {
         Optional<Annonce> annonce = repository.findById(id);
         if (annonce.isPresent()) {
             Annonce newStatus = annonce.get();
@@ -34,7 +37,9 @@ public class AnnonceService {
         } else {
             throw new Exception("Annonce is not present");
         }
+        return annonce;
     }
+
 
     public List<Annonce> getByUtilisateur(String idUtilisateur) {
         return repository.findByUtilisateur(idUtilisateur);

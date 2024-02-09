@@ -1,6 +1,9 @@
 package com.voiture.occasion.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -13,7 +16,7 @@ public class Modele {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     String idModele;
     String nomModele;
-    @ManyToOne  @JoinColumn(name = "id_marque") Marque marque;
+    @ManyToOne(fetch = FetchType.EAGER)  @JoinColumn(name = "id_marque") @JsonIgnore Marque marque;
     @ManyToOne  @JoinColumn(name = "id_corps") Corps corps;
 
     public Modele() {

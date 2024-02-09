@@ -28,13 +28,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 
-
-
 @RestController
 public class AdminController {
     @Autowired
     private AnnonceService annonceRep;
-    @Autowired 
+    @Autowired
     private ModeleRepository modeleRep;
     @Autowired
     private MarqueRepository marqueRep;
@@ -46,15 +44,15 @@ public class AdminController {
     private TransmissionRepository transmissionRep;
     @Autowired
     private StatistiqueService statistiqueRep;
-    
+
     // corps
     @PostMapping("/admin/corp")
     public Corps createCorps(@RequestBody Corps corps) {
         return corpsRep.save(corps);
     }
 
-    @GetMapping("/admin/corps") 
-    public @ResponseBody  List<Corps> getAllCorps() {
+    @GetMapping("/admin/corps")
+    public @ResponseBody List<Corps> getAllCorps() {
         return corpsRep.findAll();
     }
 
@@ -74,8 +72,8 @@ public class AdminController {
         return marqueRep.save(marque);
     }
 
-    @GetMapping("/admin/marques") 
-    public @ResponseBody  List<Marque> getAllMarque() {
+    @GetMapping("/admin/marques")
+    public @ResponseBody List<Marque> getAllMarque() {
         return marqueRep.findAll();
     }
 
@@ -92,16 +90,16 @@ public class AdminController {
     // modele
     @PostMapping("/admin/modele")
     public Modele createModele(@RequestBody Modele modele) {
-        return  modeleRep.save(modele);
+        return modeleRep.save(modele);
     }
 
     @GetMapping("/admin/modeles")
-    public @ResponseBody List<Modele> getAllModele(){
+    public @ResponseBody List<Modele> getAllModele() {
         return modeleRep.findAll();
     }
 
     @GetMapping("/admin/modele/{idmodele}")
-    public @ResponseBody Optional<Modele> getByIdModele(@PathVariable(name = "idmodele") String idModele){
+    public @ResponseBody Optional<Modele> getByIdModele(@PathVariable(name = "idmodele") String idModele) {
         return modeleRep.findById(idModele);
     }
 
@@ -110,14 +108,14 @@ public class AdminController {
         modeleRep.deleteById(idModele);
     }
 
-    // moteur    
+    // moteur
     @PostMapping("/admin/moteur")
     public Moteur createMoteur(@RequestBody Moteur moteur) {
         return moteurRep.save(moteur);
     }
 
-    @GetMapping("/admin/moteurs") 
-    public @ResponseBody  List<Moteur> getAllMoteur() {
+    @GetMapping("/admin/moteurs")
+    public @ResponseBody List<Moteur> getAllMoteur() {
         return moteurRep.findAll();
     }
 
@@ -137,13 +135,14 @@ public class AdminController {
         return transmissionRep.save(transmission);
     }
 
-    @GetMapping("/admin/transmissions") 
-    public @ResponseBody  List<Transmission> getAllTransmission() {
+    @GetMapping("/admin/transmissions")
+    public @ResponseBody List<Transmission> getAllTransmission() {
         return transmissionRep.findAll();
     }
 
     @GetMapping("/admin/transmission/{idtransmission}")
-    public @ResponseBody Optional<Transmission> getByIdTransmission(@PathVariable(name = "idtransmission") String idTransmission) {
+    public @ResponseBody Optional<Transmission> getByIdTransmission(
+            @PathVariable(name = "idtransmission") String idTransmission) {
         return transmissionRep.findById(idTransmission);
     }
 
@@ -152,9 +151,10 @@ public class AdminController {
         transmissionRep.deleteById(idTransmission);
     }
 
-    // annonce 
+    // annonce
     @PostMapping("/admin/annonce/{idannonce}/{etat}")
-    public Optional<Annonce> insertValidation(@PathVariable(name = "idannonce") String id, @PathVariable(name = "etat") int etat) {
+    public Optional<Annonce> insertValidation(@PathVariable(name = "idannonce") String id,
+        @PathVariable(name = "etat") int etat) {
         return annonceRep.insertValidation(etat, id);
     }
 
@@ -168,7 +168,5 @@ public class AdminController {
     public Statistique getStatistique() {
         return statistiqueRep.getStatistique();
     }
-    
-    
-    
+
 }

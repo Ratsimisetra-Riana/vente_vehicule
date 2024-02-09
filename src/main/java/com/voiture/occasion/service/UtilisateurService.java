@@ -26,10 +26,13 @@ public class UtilisateurService implements UserDetailsService {
         return user;
     }
 
-    public String login(String email, String password) throws Exception {
+    public String[] login(String email, String password) throws Exception {
         Optional<Utilisateur> user = repository.findUtilisateur(email, password);
         if (user.isPresent()) {
-            return tokenService.generateAccessToken(user.get());
+            String[] result = new String[2];
+            result[0] = tokenService.generateAccessToken(user.get());
+            result[1] = user.get().getRole();
+            return result;
         }
         throw new Exception("User not found");
     }

@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.voiture.occasion.config.auth.TokenProvider;
@@ -29,14 +28,17 @@ public class UserController {
     @Autowired
     private TokenProvider token;
 
-    @PostMapping("/user/annonce")
-    public Annonce createAnnonce(@RequestHeader(name = "Authorization") String utilisateur, @RequestBody Annonce annonce) {
+
+    @PostMapping(value = "/user/annonce")
+    public Annonce createAnnonce(@RequestHeader(name = "Authorization") String utilisateur,  @RequestBody Annonce annonce) { 
             String idUtilisateur = token.validateToken(utilisateur.replace("Bearer ", ""));
             annonce.setIdUtilisateur(idUtilisateur);
             annonce.setStatus("0");
             annonce.setDateAnnonce(LocalDateTime.now());
             return service.createAnnonce(annonce);
     }
+
+
 
     @GetMapping("/user/annonces")
     public List<Annonce> getByUtilisateur(@RequestHeader(name = "Authorization") String utilisateur) {
@@ -72,7 +74,7 @@ public class UserController {
     @GetMapping("/user/favoris")
     public List<Annonce> getFavoris(@RequestHeader(name = "Authorization") String utilisateur) {
         String idUtilisateur = token.validateToken(utilisateur.replace("Bearer ", ""));
-        return service.getByUtilisateur(idUtilisateur);
+        return service.getFavoris(idUtilisateur);
     }
 
         

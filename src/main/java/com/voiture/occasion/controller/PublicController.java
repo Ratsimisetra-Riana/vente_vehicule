@@ -3,7 +3,6 @@ package com.voiture.occasion.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.voiture.occasion.model.Annonce;
@@ -23,7 +22,7 @@ public class PublicController {
     private AnnonceService service;
     @Autowired
     private UtilisateurService userRep;
-
+    
     @GetMapping("/public/annonces")
     public List<Annonce> getALlValidates() {
         return service.getAllValidate();
@@ -40,7 +39,6 @@ public class PublicController {
     ) {
         return service.searchByElements(description, idCoprs, idTransmission, idMoteur, idMarque, idModele);
     }
-    
 
     @PostMapping("/public/signup")
     public Utilisateur signUp(@RequestBody Utilisateur utilisateur) {
@@ -48,13 +46,12 @@ public class PublicController {
     }
 
     @PostMapping("/public/signin")
-    public ResponseEntity<String> signIn(@RequestParam("email") String email, @RequestParam("password") String password) {
-        try {
-            String token = userRep.login(email, password);
-            return ResponseEntity.ok(token);
-        } catch (Exception e) {
-            return ResponseEntity.ok(e.getMessage());
+    public String[] signIn(@RequestParam("email") String email, @RequestParam("password") String password) throws Exception {
+        String[] result = userRep.login(email, password);
+        if (result != null) {
+            return result;
         }
+        return null;
     }
 
     
