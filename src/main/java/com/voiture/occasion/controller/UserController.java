@@ -21,6 +21,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import com.voiture.occasion.model.Annonce;
+import com.voiture.occasion.model.Corps;
+import com.voiture.occasion.model.Moteur;
+import com.voiture.occasion.model.Statistique;
+import com.voiture.occasion.model.Transmission;
+import com.voiture.occasion.model.Marque;
+import com.voiture.occasion.model.Modele;
+import com.voiture.occasion.repository.CorpsRepository;
+import com.voiture.occasion.repository.MoteurRepository;
+import com.voiture.occasion.repository.TransmissionRepository;
+import com.voiture.occasion.repository.MarqueRepository;
+import com.voiture.occasion.repository.ModeleRepository;
+
 @CrossOrigin(origins = "*")
 @RestController
 public class UserController {
