@@ -126,27 +126,32 @@ public class UserController {
     }
 
     @GetMapping("/user/annonces/every")
-    public List<Annonce> getAllByUtilisateur(String idUtilisateur){
+    public List<Annonce> getAllByUtilisateur(@RequestHeader(name = "Authorization") String tokenHeader){
+        String idUtilisateur = token.validateToken(tokenHeader.replace("Bearer ", ""));
         return service.getAllByUtilisateur(idUtilisateur);
     }
 
     @GetMapping("/user/annonces/validated")
-    public List<Annonce> getValidateByUtilisateur(String idUtilisateur){
+    public List<Annonce> getValidateByUtilisateur(@RequestHeader(name = "Authorization") String tokenHeader){
+        String idUtilisateur = token.validateToken(tokenHeader.replace("Bearer ", ""));
         return service.getValidateByUtilisateur(idUtilisateur);
     }
 
     @GetMapping("/user/annonces/refused")
-    public List<Annonce> getRefusedByUtilisateur(String idUtilisateur){
+    public List<Annonce> getRefusedByUtilisateur(@RequestHeader(name = "Authorization") String tokenHeader){
+        String idUtilisateur = token.validateToken(tokenHeader.replace("Bearer ", ""));
         return service.getRefusedByUtilisateur(idUtilisateur);
     }
 
     @GetMapping("/user/annonces/sold")
-    public List<Annonce> getSoldByUtilisateur(String idUtilisateur){
+    public List<Annonce> getSoldByUtilisateur(@RequestHeader(name = "Authorization") String tokenHeader){
+        String idUtilisateur = token.validateToken(tokenHeader.replace("Bearer ", ""));
         return service.getSoldByUtilisateur(idUtilisateur);
     }
 
     @GetMapping("/user/annonces/tovalidate")
-    public List<Annonce> getToValidateByUtilisateur(String idUtilisateur){
+    public List<Annonce> getToValidateByUtilisateur(@RequestHeader(name = "Authorization") String tokenHeader){
+        String idUtilisateur = token.validateToken(tokenHeader.replace("Bearer ", ""));
         return service.getToValidateByUtilisateur(idUtilisateur);
     }
 
