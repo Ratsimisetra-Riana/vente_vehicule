@@ -19,6 +19,21 @@ public interface AnnonceRepository extends JpaRepository<Annonce, String> {
     @Query(value = "select * from annonce_validation where id_utilisateur = :idutilisateur", nativeQuery = true)
     public List<Annonce> findByUtilisateur(@Param("idutilisateur") String idUtilisateur);
 
+    @Query(value = "select * from annonce where id_utilisateur = :idutilisateur", nativeQuery = true)
+    public List<Annonce> getByUtilisateur(@Param("idutilisateur") String idUtilisateur);
+
+    @Query(value = "select * from annonce_validation where id_utilisateur = :idutilisateur and etat = 1", nativeQuery = true)
+    public List<Annonce> getValidateByUtilisateur(@Param("idutilisateur") String idUtilisateur);
+
+    @Query(value = "select * from annonce_validation where id_utilisateur = :idutilisateur and etat = 0", nativeQuery = true)
+    public List<Annonce> getRefusedByUtilisateur(@Param("idutilisateur") String idUtilisateur);
+
+    @Query(value = "select * from annonce where id_utilisateur = :idutilisateur and status = 1", nativeQuery = true)
+    public List<Annonce> getSoldByUtilisateur(@Param("idutilisateur") String idUtilisateur);
+
+    @Query(value = "select * from annonce_validation where id_utilisateur = :idutilisateur and etat is null", nativeQuery = true)
+    public List<Annonce> getToValidateByUtilisateur(@Param("idutilisateur") String idUtilisateur);
+
     @Modifying
     @Transactional
     @Query(value = "insert into favoris (id_annonce, id_utilisateur) values (:idannonce, :idutilisateur)", nativeQuery = true)
@@ -27,6 +42,7 @@ public interface AnnonceRepository extends JpaRepository<Annonce, String> {
     @Query(value = "select * from annonce_validation where id_annonce in (select id_annonce from favoris where iD_utilisateur = :idutilisateur)", nativeQuery = true)
     public List<Annonce> findFavoris(@Param("idutilisateur") String idUtilisateur);
 
+    
 
     // admin
     @Modifying

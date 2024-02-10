@@ -63,8 +63,6 @@ public class UserController {
             return service.createAnnonce(annonce);
     }
 
-
-
     @GetMapping("/user/annonces")
     public List<Annonce> getByUtilisateur(@RequestHeader(name = "Authorization") String utilisateur) {
         String idUtilisateur = token.validateToken(utilisateur.replace("Bearer ", ""));
@@ -107,17 +105,17 @@ public class UserController {
         return corpsRep.findAll();
     }
 
- @GetMapping("/user/marques")
+    @GetMapping("/user/marques")
     public @ResponseBody List<Marque> getAllMarque() {
         return marqueRep.findAll();
     }
 
-@GetMapping("/user/modeles")
+    @GetMapping("/user/modeles")
     public @ResponseBody List<Modele> getAllModele() {
         return modeleRep.findAll();
     }
 
- @GetMapping("/user/moteurs")
+    @GetMapping("/user/moteurs")
     public @ResponseBody List<Moteur> getAllMoteur() {
         return moteurRep.findAll();
     } 
@@ -126,4 +124,31 @@ public class UserController {
     public @ResponseBody List<Transmission> getAllTransmission() {
         return transmissionRep.findAll();
     }
+
+    @GetMapping("/user/annonces/every")
+    public List<Annonce> getAllByUtilisateur(String idUtilisateur){
+        return service.getAllByUtilisateur(idUtilisateur);
+    }
+
+    @GetMapping("/user/annonces/validated")
+    public List<Annonce> getValidateByUtilisateur(String idUtilisateur){
+        return service.getValidateByUtilisateur(idUtilisateur);
+    }
+
+    @GetMapping("/user/annonces/refused")
+    public List<Annonce> getRefusedByUtilisateur(String idUtilisateur){
+        return service.getRefusedByUtilisateur(idUtilisateur);
+    }
+
+    @GetMapping("/user/annonces/sold")
+    public List<Annonce> getSoldByUtilisateur(String idUtilisateur){
+        return service.getSoldByUtilisateur(idUtilisateur);
+    }
+
+    @GetMapping("/user/annonces/tovalidate")
+    public List<Annonce> getToValidateByUtilisateur(String idUtilisateur){
+        return service.getToValidateByUtilisateur(idUtilisateur);
+    }
+
+
 }

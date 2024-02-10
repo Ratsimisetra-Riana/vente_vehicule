@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import com.voiture.occasion.model.Annonce;
 import com.voiture.occasion.model.Image;
@@ -45,6 +47,10 @@ public class AnnonceService {
         return repository.findByUtilisateur(idUtilisateur);
     }
 
+    public List<Annonce> findByUtilisateur(String idUtilisateur) {
+        return repository.getByUtilisateur(idUtilisateur);
+    }
+
     public Optional<Annonce> getByIdAnnonce(String idAnnonce) {
         return repository.findById(idAnnonce);
     }
@@ -57,6 +63,28 @@ public class AnnonceService {
     public List<Annonce> getFavoris(String idUtilisateur) {
         return repository.findFavoris(idUtilisateur);
     }
+
+    public List<Annonce> getAllByUtilisateur(String idUtilisateur){
+        return repository.getByUtilisateur(idUtilisateur);
+    }
+
+    public List<Annonce> getValidateByUtilisateur(String idUtilisateur){
+        return repository.getValidateByUtilisateur(idUtilisateur);
+    }
+
+    public List<Annonce> getRefusedByUtilisateur(String idUtilisateur){
+        return repository.getRefusedByUtilisateur(idUtilisateur);
+    }
+
+    public List<Annonce> getSoldByUtilisateur(String idUtilisateur){
+        return repository.getSoldByUtilisateur(idUtilisateur);
+    }
+
+    public List<Annonce> getToValidateByUtilisateur(String idUtilisateur){
+        return repository.getToValidateByUtilisateur(idUtilisateur);
+    }
+
+
     // admin
     public Optional<Annonce> insertValidation(int etat, String idAnnonce) {
         repository.saveValidation(etat, idAnnonce);
