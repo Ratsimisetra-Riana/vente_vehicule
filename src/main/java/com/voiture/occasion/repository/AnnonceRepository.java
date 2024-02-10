@@ -24,7 +24,7 @@ public interface AnnonceRepository extends JpaRepository<Annonce, String> {
     @Query(value = "insert into favoris (id_annonce, id_utilisateur) values (:idannonce, :idutilisateur)", nativeQuery = true)
     public void saveFavoris(@Param("idannonce") String idAnnonce, @Param("idutilisateur") String idUtilisateur);
 
-    @Query(value = "select * from annonce_favoris where id_utilisateur = :idutilisateur", nativeQuery = true)
+    @Query(value = "select * from favoris where id_utilisateur = :idutilisateur", nativeQuery = true)
     public List<Annonce> findFavoris(@Param("idutilisateur") String idUtilisateur);
 
 
