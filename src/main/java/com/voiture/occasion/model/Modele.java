@@ -16,7 +16,7 @@ public class Modele {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     String idModele;
     String nomModele;
-    @ManyToOne(fetch = FetchType.EAGER)  @JoinColumn(name = "id_marque") @JsonIgnore Marque marque;
+    @ManyToOne(fetch = FetchType.EAGER)  @JoinColumn(name = "id_marque") Marque marque;
     @ManyToOne  @JoinColumn(name = "id_corps") Corps corps;
 
     public Modele() {
