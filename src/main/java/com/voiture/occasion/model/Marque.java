@@ -11,7 +11,6 @@ import jakarta.persistence.OneToMany;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 public class Marque {
     @Id
@@ -19,7 +18,7 @@ public class Marque {
     String idMarque;
     String nomMarque;
 
-    @OneToMany(mappedBy = "marque", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "marque", cascade = CascadeType.ALL) @JsonIgnore
     List<Modele> modeles;
 
     public Marque() {
