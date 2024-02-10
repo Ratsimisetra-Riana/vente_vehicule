@@ -89,6 +89,11 @@ public class AdminController {
         marqueRep.deleteById(idMarque);
     }
 
+    @GetMapping("/admin/modeles/{idMarque}")
+    public @ResponseBody List<Modele> getModeleByIdMarque(@PathVariable(name = "idMarque") String idMarque) {
+        return modeleRep.findByIdMarque(idMarque);
+    }
+
     // modele
     @PostMapping("/admin/modele")
     public Modele createModele(@RequestBody Modele modele) {

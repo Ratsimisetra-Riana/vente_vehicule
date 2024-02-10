@@ -13,4 +13,5 @@ import com.voiture.occasion.model.Modele;
 public interface ModeleRepository extends JpaRepository<Modele, String> {
     @Query(value = "select * from modele where id_marque = :idmarque", nativeQuery = true)
     public List<Modele> findByIdMarque(@Param("idmarque") String idMarque); 
+    
 }
