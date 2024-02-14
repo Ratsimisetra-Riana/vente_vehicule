@@ -57,7 +57,7 @@ public interface AnnonceRepository extends JpaRepository<Annonce, String> {
     public List<Annonce> findAllDemande();
     
     // public
-    @Query(value = "select * from annonce_validation where etat = 1", nativeQuery = true)
+    @Query(value = "select * from annonce_validation where etat = 1 and status = 0", nativeQuery = true)
     public List<Annonce> findAllValidate();
     
 
