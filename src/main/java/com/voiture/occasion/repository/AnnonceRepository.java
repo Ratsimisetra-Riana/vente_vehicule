@@ -22,7 +22,7 @@ public interface AnnonceRepository extends JpaRepository<Annonce, String> {
     @Query(value = "select * from annonce where id_utilisateur = :idutilisateur", nativeQuery = true)
     public List<Annonce> getByUtilisateur(@Param("idutilisateur") String idUtilisateur);
 
-    @Query(value = "select * from annonce_validation where id_utilisateur = :idutilisateur and etat = 1", nativeQuery = true)
+    @Query(value = "select * from annonce_validation where id_utilisateur = :idutilisateur and etat = 1 and status = 0", nativeQuery = true)
     public List<Annonce> getValidateByUtilisateur(@Param("idutilisateur") String idUtilisateur);
 
     @Query(value = "select * from annonce_validation where id_utilisateur = :idutilisateur and etat = 0", nativeQuery = true)
